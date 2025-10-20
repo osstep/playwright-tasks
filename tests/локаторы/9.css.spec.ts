@@ -19,7 +19,7 @@ test.describe('Продвинутые CSS-селекторы', () => {
     //    - Является прямой дочерней элементом формы
     //    - Имеет класс btn и submit-btn
     //    - Не disabled
-    const submitButton = // твой код
+    const submitButton = page.locator('.form-input.btn.submit-btn')
       await expect(submitButton).toBeEnabled();
   });
 });
