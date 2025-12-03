@@ -46,7 +46,7 @@ test.describe('Динамический контент с условиями', (
 
   test('Комбинации с :has и :not', async ({ page }) => {
     // 1. Найти все карточки, которые:
-    //    - Не имеют статуса sold-out
+    //    - Не имеют класс sold-out
     //    - Содержат кнопку с текстом "В корзину"
     const availableProducts = // твой код
       await expect(availableProducts).toHaveCount(2);

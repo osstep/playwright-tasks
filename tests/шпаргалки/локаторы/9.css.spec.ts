@@ -50,7 +50,7 @@ test.describe('Динамический контент с условиями', (
 
   test('Комбинации с :has и :not', async ({ page }) => {
     // 1. Найти все карточки, которые:
-    //    - Не имеют статуса sold-out
+    //    - Не имеют класс sold-out
     //    - Содержат кнопку с текстом "В корзину"
     const availableProducts = page.locator(
       '.product-card:not(.sold-out):has(.btn:has-text("В корзину"))',
