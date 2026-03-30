@@ -19,7 +19,7 @@ test.describe('Продвинутые CSS-селекторы', () => {
     //    - Является прямой дочерней элементом формы
     //    - Имеет класс btn и submit-btn
     //    - Не disabled
-    const submitButton = // твой код
+    const submitButton = page.locator('[data-todo="submitButton"]'); // TODO(student): замените на корректный локатор
       await expect(submitButton).toBeEnabled();
   });
 });
@@ -34,13 +34,13 @@ test.describe('Динамический контент с условиями', (
     //    - Имеет класс disabled
     //    - Содержит текст "Недоступно"
     //    - Не имеет атрибута type="submit"
-    const dynamicButton = // твой код
+    const dynamicButton = page.locator('[data-todo="dynamicButton"]'); // TODO(student): замените на корректный локатор
       await expect(dynamicButton).toBeVisible({ timeout: 2000 });
 
     // 2. Найти динамический товар, который:
     //    - Цена меньше 10 000 ₽
     //    - Не является рекомендуемым (featured)
-    const cheapProduct = // твой код
+    const cheapProduct = page.locator('[data-todo="cheapProduct"]'); // TODO(student): замените на корректный локатор
       await expect(cheapProduct).toHaveText('9 999');
   });
 
@@ -48,13 +48,13 @@ test.describe('Динамический контент с условиями', (
     // 1. Найти все карточки, которые:
     //    - Не имеют класс sold-out
     //    - Содержат кнопку с текстом "В корзину"
-    const availableProducts = // твой код
+    const availableProducts = page.locator('[data-todo="availableProducts"]'); // TODO(student): замените на корректный локатор
       await expect(availableProducts).toHaveCount(2);
 
     // 2. Найти ячейки таблицы, которые:
     //    - В строках с активными пользователями
     //    - Не являются ячейками с email
-    const activeUserCells = // твой код
+    const activeUserCells = page.locator('[data-todo="activeUserCells"]'); // TODO(student): замените на корректный локатор
       await expect(activeUserCells).toHaveCount(3); // ID, Имя, Статус
   });
 });

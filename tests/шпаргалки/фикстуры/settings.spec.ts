@@ -4,8 +4,8 @@ interface SettingsFixtures {
   configuredSettings: Page;
 }
 
-// Нужно реализовать фукстуру configuredSettings
-// Отркрыть страницу https://osstep.github.io/fixture_settings
+// Нужно реализовать фикстуру configuredSettings
+// Открыть страницу https://osstep.github.io/fixture_settings
 // Выбрать темную тему
 // Активировать опцию пуш-нотификации
 // Нажать кнопку Сохранить

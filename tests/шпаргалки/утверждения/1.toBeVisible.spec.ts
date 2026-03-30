@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 test.describe('Тестирование видимости элементов с toBeVisible()', () => {
   test.beforeEach(async ({ page }) => {

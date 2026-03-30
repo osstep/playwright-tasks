@@ -3,13 +3,17 @@ import { test as base, expect, Page } from '@playwright/test';
 interface CartFixtures {
   preloadedCart: Page;
 }
-// Нужно реализовать фукстуру preloadedCart
-// Отркрыть страницу https://osstep.github.io/fixture_cart
+// Нужно реализовать фикстуру preloadedCart
+// Открыть страницу https://osstep.github.io/fixture_cart
 // Нажать кнопку добавления товаров
-// Заполнить поле пароль admin123
-// Авторизоваться
+// Вызвать use(page) после того, как корзина предзаполнена
 export const test = base.extend<CartFixtures>({
-  preloadedCart: async ({ page }, use) => {},
+  preloadedCart: async ({ page }, use) => {
+    await page.goto('https://osstep.github.io/fixture_cart');
+    throw new Error(
+      'TODO(student): нажмите кнопку добавления sample-товаров и передайте страницу в use(page)',
+    );
+  },
 });
 
 test('Cart contains sample items', async ({ preloadedCart }) => {
