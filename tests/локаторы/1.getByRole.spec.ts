@@ -9,7 +9,7 @@ test.describe('Поиск элементов по роли "button"', () => {
   // После нахождения кнопки проверь что она видима и имеет класс primary-btn
   test('Найти основную кнопку по роли и тексту', async ({ page }) => {
     const primaryButton = page.locator('[data-todo="primaryButton"]'); // TODO(student): замените на корректный локатор
-      await expect(primaryButton).toBeVisible();
+    await expect(primaryButton).toBeVisible();
     await expect(primaryButton).toHaveClass(/primary-btn/);
   });
 
@@ -17,7 +17,7 @@ test.describe('Поиск элементов по роли "button"', () => {
   // Проверь что кнопка видима и действительно disabled
   test('Найти неактивную кнопку по роли и состоянию', async ({ page }) => {
     const disabledButton = page.locator('[data-todo="disabledButton"]'); // TODO(student): замените на корректный локатор
-      await expect(disabledButton).toBeVisible();
+    await expect(disabledButton).toBeVisible();
     await expect(disabledButton).toBeDisabled();
   });
 
@@ -25,7 +25,7 @@ test.describe('Поиск элементов по роли "button"', () => {
   // Проверь что элемент видим и содержит текст "Div как кнопка"
   test('Найти div с ролью кнопки', async ({ page }) => {
     const divButton = page.locator('[data-todo="divButton"]'); // TODO(student): замените на корректный локатор
-      await expect(divButton).toBeVisible();
+    await expect(divButton).toBeVisible();
     await expect(divButton).toHaveText('Div как кнопка');
   });
 });
@@ -39,7 +39,7 @@ test.describe('Поиск элементов форм по ролям', () => {
   // Заполни поле текстом "тестовый_пользователь" и проверь значение
   test('Найти поля формы по их ролям', async ({ page }) => {
     const usernameInput = page.locator('[data-todo="usernameInput"]'); // TODO(student): замените на корректный локатор
-      await expect(usernameInput).toBeVisible();
+    await expect(usernameInput).toBeVisible();
     await usernameInput.fill('тестовый_пользователь');
     await expect(usernameInput).toHaveValue('тестовый_пользователь');
   });
@@ -48,7 +48,7 @@ test.describe('Поиск элементов форм по ролям', () => {
   // Проверь что он не выбран, затем выбери его и проверь снова
   test('Найти чекбоксы по роли checkbox', async ({ page }) => {
     const newsletterCheckbox = page.locator('[data-todo="newsletterCheckbox"]'); // TODO(student): замените на корректный локатор
-      await expect(newsletterCheckbox).toBeVisible();
+    await expect(newsletterCheckbox).toBeVisible();
     await expect(newsletterCheckbox).not.toBeChecked();
     await newsletterCheckbox.check();
     await expect(newsletterCheckbox).toBeChecked();
@@ -79,7 +79,7 @@ test.describe('Поиск вкладок и уведомлений по роля
   // 5. Найди содержимое вкладки по роли tabpanel и проверь его видимость
   test('Переключение между вкладками', async ({ page }) => {
     const settingsTab = page.locator('[data-todo="settingsTab"]'); // TODO(student): замените на корректный локатор
-      await expect(settingsTab).toHaveAttribute('aria-selected', 'false');
+    await expect(settingsTab).toHaveAttribute('aria-selected', 'false');
     await settingsTab.click();
     await expect(settingsTab).toHaveAttribute('aria-selected', 'true');
     const settingsPanel = page.locator('[data-todo="settingsPanel"]'); // TODO(student): замените на корректный локатор
@@ -92,7 +92,7 @@ test.describe('Поиск вкладок и уведомлений по роля
   // 3. Проверь что оно видимо и имеет класс alert-success
   test('Проверить уведомления на странице', async ({ page }) => {
     const successAlert = page.locator('[data-todo="successAlert"]'); // TODO(student): замените на корректный локатор
-      await expect(successAlert).toBeVisible();
+    await expect(successAlert).toBeVisible();
     await expect(successAlert).toHaveClass(/alert-success/);
   });
 });
