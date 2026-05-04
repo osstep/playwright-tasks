@@ -13,7 +13,7 @@ test.describe('Базовые hover-эффекты', () => {
   test('Hover события логируются', async ({ page }) => {
     const hoverBox = page.getByText('Наведи на меня');
 
-    // твой код
+    await hoverBox.hover();
     await expect(page.locator('#hover-log')).toContainText('Наведение на простой блок');
 
     await page.mouse.move(0, 0);
@@ -40,7 +40,7 @@ test.describe('Всплывающие подсказки', () => {
     await expect(tooltip).toBeHidden();
 
     // Наводим курсор
-    // твой код
+    await tooltipTrigger.hover();
 
     // Проверяем появление подсказки
     await expect(tooltip).toBeVisible();
@@ -57,7 +57,7 @@ test.describe('Всплывающие подсказки', () => {
     const tooltip = page.getByText('Это текст подсказки');
 
     const box = await tooltipTrigger.boundingBox();
-    // твой код
+    await tooltipTrigger.hover();
 
     const tooltipBox = await tooltip.boundingBox();
     if (tooltipBox && box) {
@@ -91,7 +91,7 @@ test.describe('Выпадающие меню', () => {
     await expect(submenu).toBeHidden();
 
     // Наводим курсор
-    // твой код
+    await menuItem.hover();
 
     // Проверяем что подменю появилось
     await expect(submenu).toBeVisible();
@@ -110,11 +110,11 @@ test.describe('Выпадающие меню', () => {
     const submenu2 = page.getByText('Подменю 2.1');
 
     // Наводим на первое меню
-    // твой код
+    await menuItem1.hover();
     await expect(submenu1).toBeVisible();
 
     // Переходим на второе меню
-    // твой код
+    await menuItem2.hover();
     await expect(submenu1).toBeHidden();
     await expect(submenu2).toBeVisible();
   });
