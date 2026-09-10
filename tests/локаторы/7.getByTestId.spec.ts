@@ -8,7 +8,7 @@ test.describe('Базовые тесты для getByTestId()', () => {
   // Задание 1: Найди заголовок страницы по test-id "page-header"
   // Проверь что он содержит текст "Практика локатора getByTestId()"
   test('Найти заголовок страницы', async ({ page }) => {
-    const header = page.locator('[data-todo="header"]'); // TODO(student): замените на корректный локатор
+    const header = page.getByTestId('page-header'); // TODO(student): замените на корректный локатор
     await expect(header).toBeVisible();
     await expect(header).toContainText('Практика локатора getByTestId()');
   });
@@ -16,7 +16,7 @@ test.describe('Базовые тесты для getByTestId()', () => {
   // Задание 2: Найди все кнопки "В корзину" по test-id "add-to-cart-btn"
   // Проверь что найдено 2 такие кнопки
   test('Найти все кнопки добавления в корзину', async ({ page }) => {
-    const addButtons = page.locator('[data-todo="addButtons"]'); // TODO(student): замените на корректный локатор
+    const addButtons = page.getByTestId('add-to-cart-btn'); // TODO(student): замените на корректный локатор
     await expect(addButtons).toHaveCount(2);
     await expect(addButtons.first()).toHaveText('В корзину');
   });
@@ -29,7 +29,7 @@ test.describe('Тесты для формы и продуктов', () => {
 
   // Задание 1: Найди карточку продукта по test-id и проверь её содержимое
   test('Проверить карточку продукта', async ({ page }) => {
-    const productCard = page.locator('[data-todo="productCard"]'); // TODO(student): замените на корректный локатор
+    const productCard = page.getByTestId('product-card-1'); // TODO(student): замените на корректный локатор
     await expect(productCard).toBeVisible();
 
     const productName = productCard.getByTestId('product-name');
@@ -41,7 +41,7 @@ test.describe('Тесты для формы и продуктов', () => {
 
   // Задание 2: Найди форму заказа и заполни её
   test('Заполнить форму заказа', async ({ page }) => {
-    const form = page.locator('[data-todo="form"]'); // TODO(student): замените на корректный локатор
+    const form = page.getByTestId('order-form-section'); // TODO(student): замените на корректный локатор
     await expect(form).toBeVisible();
 
     await form.getByTestId('name-input').fill('Иван Иванов');
@@ -59,7 +59,7 @@ test.describe('Специальные случаи для getByTestId()', () => 
 
   // Задание 1: Найди скрытый элемент по test-id и проверь что он не видим
   test('Проверить скрытый элемент', async ({ page }) => {
-    const hiddenElement = page.locator('[data-todo="hiddenElement"]'); // TODO(student): замените на корректный локатор
+    const hiddenElement = page.getByTestId('hidden-element'); // TODO(student): замените на корректный локатор
     await expect(hiddenElement).toBeHidden();
     await expect(hiddenElement).toHaveText('Этот элемент скрыт');
   });
@@ -73,7 +73,7 @@ test.describe('Специальные случаи для getByTestId()', () => 
 
   // Задание 3: Найди футер страницы и проверь текст копирайта
   test('Проверить футер страницы', async ({ page }) => {
-    const footer = page.locator('[data-todo="footer"]'); // TODO(student): замените на корректный локатор
+    const footer = page.getByTestId('page-footer'); // TODO(student): замените на корректный локатор
     const copyright = footer.getByTestId('copyright-text');
     await expect(copyright).toContainText('2023');
   });
