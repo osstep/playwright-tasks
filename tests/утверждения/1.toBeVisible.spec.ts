@@ -6,43 +6,54 @@ test.describe('Тестирование видимости элементов с
   });
 
   test('Базовый тест видимости элемента', async ({ page }) => {
-    // Задание 1: Проверка видимости элемента
-    // 1. Найти элемент с id "always-visible"
-    // 2. Проверить что элемент видим с помощью toBeVisible()
-    // 3. Проверить что элемент содержит текст "Всегда видимый элемент"
+    const constVisibleElement = page.locator('#always-visible');
+
+    await expect(constVisibleElement).toBeVisible();
+    await expect(constVisibleElement).toHaveText('Всегда видимый элемент');
   });
 
   test('Тест элементов с разными типами скрытия', async ({ page }) => {
-    // Задание 2: Проверка скрытых элементов
-    // 1. Найти три элемента с разными способами скрытия:
-    //    - #toggle-display (display: none)
-    //    - #toggle-visibility (visibility: hidden)
-    //    - #toggle-opacity (opacity: 0)
-    // 2. Проверить что #toggle-display и #toggle-visibility не видны с помощью not.toBeVisible()
-    // 3. Проверить что #toggle-opacity виден с помощью toBeVisible()
+    const hiddenDisplayElement = page.locator('#toggle-display');
+    const hiddenVisibilityElement = page.locator('#toggle-visibility');
+    const hiddenOpacityElement = page.locator('#toggle-opacity');
+
+    await expect(hiddenDisplayElement).not.toBeVisible();
+    await expect(hiddenDisplayElement).toHaveCSS('display', 'none');
+
+    await expect(hiddenVisibilityElement).not.toBeVisible();
+    await expect(hiddenVisibilityElement).toHaveCSS('visibility', 'hidden');
+
+    await expect(hiddenOpacityElement).toBeVisible();
+    await expect(hiddenOpacityElement).toHaveCSS('opacity', '0');
   });
 
   test('Тест изменения видимости элементов', async ({ page }) => {
-    // Задание 3: Проверка изменения видимости
-    // 1. Найти три кнопки для показа элементов:
-    //    - #show-display
-    //    - #show-visibility
-    //    - #show-opacity
-    // 2. Кликнуть по каждой кнопке
-    // 3. После каждого клика проверить:
-    //    - что соответствующий элемент стал видимым (toBeVisible())
-    //    - что CSS свойства изменились на:
-    //      - display: block
-    //      - visibility: visible
-    //      - opacity: 1
+    const displayElement = page.locator('#show-display');
+    const visibilityElement = page.locator('#show-visibility');
+    const opacityElement = page.locator('#show-opacity');
+
+    await displayElement.click();
+    await expect(page.locator('#toggle-display')).toBeVisible();
+    await expect(page.locator('#toggle-display')).toHaveCSS('display', 'block');
+
+    await visibilityElement.click();
+    await expect(page.locator('#toggle-visibility')).toBeVisible();
+    await expect(page.locator('#toggle-visibility')).toHaveCSS('visibility', 'visible');
+
+    await opacityElement.click();
+    await expect(page.locator('#toggle-opacity')).toBeVisible();
+    await expect(page.locator('#toggle-opacity')).toHaveCSS('opacity', '1');
   });
 
   test('Тест элемента с задержкой появления', async ({ page }) => {
-    // Задание 4: Проверка элемента с задержкой
-    // 1. Найти элемент #delayed-element
-    // 2. Проверить что он не видим
-    // 3. Найти кнопку #show-delayed и кликнуть по ней
-    // 4. С таймаутом 3 секунды дождаться появления элемента
-    // 5. Проверить что элемент содержит текст "Элемент с задержкой появления"
+    const delayedElement = page.locator('#delayed-element');
+    const showDelayedButton = page.locator('#show-delayed');
+
+    await expect(delayedElement).not.toBeVisible();
+
+    await showDelayedButton.click();
+
+    await expect(delayedElement).toBeVisible({ timeout: 3000 });
+    await expect(delayedElement).toHaveText('Элемент с задержкой появления');
   });
 });

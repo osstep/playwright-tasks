@@ -6,51 +6,37 @@ test.describe('Практика работы с page.evaluate()', () => {
   });
 
   test('Получение текстового содержимого элемента', async ({ page }) => {
-    // Базовое использование evaluate для получения данных
-
-    // ШАГ 1: Получить текущее значение счетчика counter через evaluate
-    // Для это используй document.getElementById('counter')?.textContent
-    const counterValue = 'TODO(student): добавьте page.evaluate(...)';
-
-    // ПРОВЕРКА: Значение счетчика равно "0" при загрузке
+    const counterValue = await page.evaluate(() => {
+      return document.getElementById('counter')?.textContent;
+    });
     expect(counterValue).toBe('0');
 
-    // ШАГ 2: Кликаем на кнопку увеличения
     await page.click('#increment');
 
-    // ШАГ 3: Получаем обновленное значение через evaluate с параметром
-    const updatedValue = 'TODO(student): добавьте page.evaluate(...)';
-
-    // ПРОВЕРКА: Значение увеличилось на 1
+    const updatedValue = await page.evaluate((selector) => {
+      return document.querySelector(selector)?.textContent;
+    }, '#counter');
     expect(updatedValue).toBe('1');
   });
 
   test('Модификация DOM через evaluate', async ({ page }) => {
-    // Тест показывает как изменять DOM-структуру
-
-    // ШАГ 1: Проверяем исходное содержимое
     const initialContent = await page.locator('#dynamic-content').innerText();
     expect(initialContent).toContain('Исходное содержимое');
 
-    // ШАГ 2: Модифицируем содержимое через evaluate - нужно с помощью evaluate добавить новой содержимое для элемента
-    // <h3>Новое содержимое</h3><p>Сгенерировано в evaluate()</p>
-    // Используй innerHTML
-    throw new Error(
-      'TODO(student): добавьте page.evaluate() для обновления innerHTML у #dynamic-content',
-    );
+    await page.evaluate(() => {
+      const div = document.getElementById('dynamic-content');
 
-    // ПРОВЕРКА: Содержимое изменилось
+      if (div) {
+        div.innerHTML = '<h3>Новое содержимое</h3><p>Сгенерировано в evaluate()</p>';
+      }
+    });
+
     await expect(page.locator('#dynamic-content h3')).toHaveText('Новое содержимое');
   });
 
-  // ЭТО ДЕМОНСТРАЦИОННЫЙ ТЕСТ
   test('Работа с комплексными объектами', async ({ page }) => {
-    // Тест демонстрирует передачу и возврат объектов
-
-    // ШАГ 1: Создаем пользователя через UI (нажать на кнопку Создать пользователя)
     await page.click('#create-user');
 
-    // ШАГ 2: Получаем данные пользователя через evaluate и возвращает в виде объекта
     const userData = await page.evaluate(() => {
       const userCard = document.querySelector('.user-card');
       if (!userCard) return null;
@@ -62,7 +48,6 @@ test.describe('Практика работы с page.evaluate()', () => {
       };
     });
 
-    // ПРОВЕРКА: Данные пользователя корректны
     expect(userData).toEqual({
       title: expect.stringContaining('Пользователь #'),
       date: expect.stringContaining('Дата создания:'),
@@ -70,11 +55,7 @@ test.describe('Практика работы с page.evaluate()', () => {
     });
   });
 
-  // ЭТО ДЕМОНСТРАЦИОННЫЙ ТЕСТ
   test('Получение информации о браузере', async ({ page }) => {
-    // Тест демонстрирует доступ к объектам браузера
-
-    // ШАГ 1: Получаем данные через evaluate
     const browserInfo = await page.evaluate(() => {
       return {
         userAgent: navigator.userAgent,
@@ -85,20 +66,14 @@ test.describe('Практика работы с page.evaluate()', () => {
       };
     });
 
-    // ШАГ 2: Выводим информацию для отладки
     console.log('Информация о браузере:', browserInfo);
 
-    // ПРОВЕРКА: Данные получены корректно
     expect(browserInfo.userAgent).toContain('Mozilla');
     expect(browserInfo.documentTitle).toBe('Практика page.evaluate()');
     expect(browserInfo.screenWidth).toBeGreaterThan(0);
   });
 
-  // ЭТО ДЕМОНСТРАЦИОННЫЙ ТЕСТ
   test('Обработка ошибок в evaluate', async ({ page }) => {
-    // Тест показывает обработку ошибок
-
-    // ШАГ 1: Пытаемся получить несуществующий элемент
     const result = await page.evaluate(() => {
       try {
         const element = document.getElementById('non-existent-element');
@@ -110,26 +85,18 @@ test.describe('Практика работы с page.evaluate()', () => {
       }
     });
 
-    // ПРОВЕРКА: Обработка ошибки сработала
     expect(result).toBeNull();
   });
 
-  // ЭТО ДЕМОНСТРАЦИОННЫЙ ТЕСТ
   test('Сравнение с обычными методами Playwright', async ({ page }) => {
-    // Тест показывает разницу между evaluate и стандартными методами
-
-    // ШАГ 1: Получаем значение счетчика стандартным способом
     const playwrightValue = await page.locator('#counter').innerText();
 
-    // ШАГ 2: Получаем значение через evaluate
     const evaluateValue = await page.evaluate(() => {
       return document.getElementById('counter')?.textContent;
     });
 
-    // ПРОВЕРКА: Значения одинаковые
     expect(playwrightValue).toBe(evaluateValue);
 
-    // ШАГ 3: Измеряем производительность
     console.time('Standard method');
     await page.locator('#counter').innerText();
     console.timeEnd('Standard method');

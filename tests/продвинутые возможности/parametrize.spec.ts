@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-// Тесты для формы входа
 test.describe('Параметризованные тесты формы входа', () => {
   const loginTestCases = [
     {
@@ -20,28 +19,74 @@ test.describe('Параметризованные тесты формы вход
     },
   ];
 
-  // Нужно реализовать параметризованный тест на основе массива loginTestCases
-  // Шаги теста:
-  // 1. Перейти на страницу формы входа
-  // 2. Заполнить поле имени пользователя (если не пустое)
-  // 3. Заполнить поле пароля
-  // 4. Нажать кнопку "Войти"
-  // 5. Проверить сообщение системы
-  // 6. Проверить класс сообщения (success/error)
+  loginTestCases.forEach(({ username, password, expected }) => {
+    test(`Тестирование входа с: ${username}, ${password}`, async ({ page }) => {
+      await page.goto('https://osstep.github.io/parametrize');
+
+      await test.step(`Заполнение формы`, async () => {
+        await page.getByRole('textbox', { name: 'Имя пользователя' }).fill(username);
+        await page.getByRole('textbox', { name: 'Пароль' }).fill(password);
+      });
+
+      await test.step(`Нажатие на кнопку входа`, async () => {
+        await page.getByRole('button', { name: 'Войти' }).click();
+      });
+
+      await test.step(`Проверяем сообщение и классы сообщения`, async () => {
+        const messageSystem = page.locator('#message');
+
+        await expect(messageSystem).toBeVisible();
+        await expect(messageSystem).toHaveText(expected);
+
+        const successMessage = await messageSystem.textContent();
+        if (successMessage === 'Успешный вход!') {
+          await expect(messageSystem).toHaveClass('success');
+        } else {
+          await expect(messageSystem).toHaveClass('error');
+        }
+      });
+    });
+  });
 });
 
-// Тесты для калькулятора
 test.describe('Параметризованные тесты калькулятора', () => {
   const calculatorTestCases = [
     { a: 5, b: 3, operation: 'add', expected: 8 },
     { a: 10, b: 0, operation: 'add', expected: 10 },
     { a: 4, b: 5, operation: 'multiply', expected: 20 },
   ];
-  // Нужно реализовать параметризованный тест на основе массива calculatorTestCases
-  // Шаги теста:
-  // 1. Перейти на страницу калькулятора
-  // 2. Ввести первое число
-  // 3. Ввести второе число
-  // 4. Нажать кнопку операции (сложение/умножение)
-  // 5. Проверить результат вычисления
+
+  calculatorTestCases.forEach(({ a, b, operation, expected }) => {
+    test(`Проверка калькулятора со значениям ${a} и ${b} и операцией ${operation}`, async ({
+      page,
+    }) => {
+      await page.goto('https://osstep.github.io/parametrize');
+
+      await test.step(`Ввод значений`, async () => {
+        const numOneInput = page.locator('#num1');
+        const numTwoInput = page.locator('#num2');
+
+        await numOneInput.fill(a.toString());
+        await numTwoInput.fill(b.toString());
+      });
+
+      await test.step(`Выбор операции`, async () => {
+        const addButton = page.locator('#add-btn');
+        const multiplyButton = page.locator('#multiply-btn');
+
+        if (operation === 'add') {
+          await addButton.click();
+        }
+        if (operation === 'multiply') {
+          await multiplyButton.click();
+        }
+      });
+
+      await test.step('Проверка результата', async () => {
+        const resultText = page.locator('#result');
+
+        await expect(resultText).toHaveText(`Результат: ${expected}`);
+      });
+    });
+  });
 });
